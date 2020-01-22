@@ -35,7 +35,7 @@ contract SupplyChain {
     Be sure to add "payable" to addresses that will be handling value transfer
   */
   struct Item {
-    bytes32 name;
+    string name;
     uint sku;
     uint price;
     State state;
@@ -72,16 +72,20 @@ contract SupplyChain {
    Hint: What item properties will be non-zero when an Item has been added?
    */
   modifier forSale (uint _sku) {require(
-    items[_sku].state == State.ForSale & items[_sku] != 0
+    items[_sku].state == State.ForSale && items[_sku].sku > 0,
+    "Item is not for sale"
     ); _; }
   modifier sold (uint _sku) {require(
-    items[_sku].state == State.Sold
+    items[_sku].state == State.Sold,
+    "Item is not sold"
     ); _; }
   modifier shipped (uint _sku) {require(
-    items[_sku].state == State.Shipped
+    items[_sku].state == State.Shipped,
+    "Item has not shipped"
     ); _; }
   modifier received (uint _sku) {require(
-    items[_sku].state == State.Received
+    items[_sku].state == State.Received,
+    "Item has not been received"
     ); _;}
 
 
