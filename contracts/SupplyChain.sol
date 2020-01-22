@@ -116,9 +116,8 @@ contract SupplyChain {
   {
     items[sku].buyer = msg.sender;
     items[sku].state = State.Sold;
-    uint _value = msg.value;
-    items[sku].seller.transfer(_value);
-    emit LogSold(sku);
+    emit LogSold(items[sku].sku);
+    items[sku].seller.transfer(items[sku].price);
   }
 
   /* Add 2 modifiers to check if the item is sold already, and that the person calling this function
@@ -129,7 +128,7 @@ contract SupplyChain {
     sold(sku)
   {
     items[sku].state = State.Shipped;
-    emit LogShipped(sku);
+    emit LogShipped(items[sku].sku);
   }
 
   /* Add 2 modifiers to check if the item is shipped already, and that the person calling this function
@@ -140,7 +139,7 @@ contract SupplyChain {
     shipped(sku)
   {
     items[sku].state = State.Received;
-    emit LogReceived(sku);
+    emit LogReceived(items[sku].sku);
   }
 
   /* We have these functions completed so we can run tests, just ignore it :) */
