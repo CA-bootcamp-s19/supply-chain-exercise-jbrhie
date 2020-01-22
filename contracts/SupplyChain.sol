@@ -52,7 +52,7 @@ contract SupplyChain {
   event LogReceived(uint sku);
 
 /* Create a modifer that checks if the msg.sender is the owner of the contract */
-
+  modifier isOwner(address _address) {require (owner == _address, "Owner needs to send contract"); _;}
   modifier verifyCaller (address _address) {require(msg.sender == _address, "Owner can call this function"); _;}
 
   modifier paidEnough(uint _price) {require(msg.value >= _price, "Need more money"); _;}
@@ -118,7 +118,7 @@ contract SupplyChain {
     items[sku].state = State.Sold;
     uint _value = msg.value;
     items[sku].seller.transfer(_value);
-    emit LogSold(items[sku].sku);
+    emit LogSold(sku);
   }
 
   /* Add 2 modifiers to check if the item is sold already, and that the person calling this function
@@ -129,7 +129,7 @@ contract SupplyChain {
     sold(sku)
   {
     items[sku].state = State.Shipped;
-    emit LogShipped(items[sku].sku);
+    emit LogShipped(sku);
   }
 
   /* Add 2 modifiers to check if the item is shipped already, and that the person calling this function
@@ -140,7 +140,7 @@ contract SupplyChain {
     shipped(sku)
   {
     items[sku].state = State.Received;
-    emit LogReceived(items[sku].sku);
+    emit LogReceived(sku);
   }
 
   /* We have these functions completed so we can run tests, just ignore it :) */
