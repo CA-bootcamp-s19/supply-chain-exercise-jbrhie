@@ -72,7 +72,7 @@ contract SupplyChain {
    Hint: What item properties will be non-zero when an Item has been added?
    */
   modifier forSale (uint _sku) {require(
-    items[_sku].state == State.ForSale && items[_sku].sku > 0,
+    items[_sku].state == State.ForSale,
     "Item is not for sale"
     ); _; }
   modifier sold (uint _sku) {require(
